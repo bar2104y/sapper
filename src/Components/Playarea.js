@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Css/game.css'
-import { Panel, Button, Group, PanelHeader } from '@vkontakte/vkui';
+import { Panel, PanelHeader } from '@vkontakte/vkui';
 
 
 
@@ -9,18 +9,19 @@ class Playarea extends React.Component {
     constructor (props){
         super(props);
 
-        this.canvSize = window.innerWidth*0.9
-        this.lineWidth = 2
-        this.areaSize = 10
-        this.step = (this.canvSize-(2*this.lineWidth))/this.areaSize
-        this.area = []
-        this.firstPress = true
-        this.score = this.areaSize*this.areaSize
-        this.openedMines = []
+        this.canvSize = window.innerWidth*0.9    //Размер холста px
+        this.lineWidth = 2                       //Толщина линии px
+        this.areaSize = 10                       //Кол-во ячеек в стороне
+        this.step = (this.canvSize-(2*this.lineWidth))/this.areaSize //Ширина и высота клетки
+        this.area = []                           // Массив мина/не мина
+        this.firstPress = true                   //Первый клик
+        this.score = this.areaSize*this.areaSize //Стартовое кол-во очков
+        this.openedMines = []                       //Открытые ячейки
 
-        this.sec = 0
-        this.min = 0
+        this.sec = 0 //Время, секунды
+        this.min = 0 //Время, минуты
 
+        //Подготовка массива с открытыми ячейками
         this.areaOpen = []
         for (let i = 0; i<this.areaSize; i++){
             this.areaOpen[i] = []
@@ -29,23 +30,32 @@ class Playarea extends React.Component {
             }
         }
 
+        //Подключение функций (объясните мне зачем это вообще нужно)
         this.getPosByIndex = this.getPosByIndex.bind(this)
         this.selectRect = this.selectRect.bind(this)
         this.genArea = this.genArea.bind(this)
         this.isMine = this.isMine.bind(this)
         this.isClear = this.isClear.bind(this)
         this.getMinesInBlock = this.getMinesInBlock.bind(this)
-        this.timer = this.timer.bind(this)        
+        this.timer = this.timer.bind(this)   
+        
+        this.winGame = this.winGame.bind(this)
+        this.filedGame = this.filedGame.bind(this)
     }
     componentDidMount(){
+        //иницианализация холста
         this.canvas = this.refs.canvas
         this.ctx = this.refs.canvas.getContext('2d')
+        // Прослушиваем событие клика
         this.canvas.addEventListener('click', this.selectRect)
+        //Подготавливаем холст
         this.createCanvas()
 
+        //Обновление секундомера
         setInterval( this.timer, 1000)
     }
 
+    //Секундомер
     timer(){
         this.sec++
             if (this.sec == 60){
@@ -68,9 +78,6 @@ class Playarea extends React.Component {
 
     //Создание заготовки игрового поля
     createCanvas(){
-        //инициализация холста
-        const ctx = this.refs.canvas.getContext('2d')
-
         //Заполнение фона
         this.ctx.fillStyle="#9E9E9E";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
@@ -80,30 +87,23 @@ class Playarea extends React.Component {
         this.ctx.lineWidth = this.lineWidth
 
         for(let i = this.lineWidth; i<=this.canvSize; i+=this.step ){
-            ctx.moveTo(0,i)
-            ctx.lineTo(this.canvSize,i)
-            ctx.moveTo(i,0)
-            ctx.lineTo(i,this.canvSize)
+            this.ctx.moveTo(0,i)
+            this.ctx.lineTo(this.canvSize,i)
+            this.ctx.moveTo(i,0)
+            this.ctx.lineTo(i,this.canvSize)
         }
 
         //Отображение изменений
-        ctx.strokeStyle="#333"
-        ctx.stroke()
+        this.ctx.strokeStyle="#333"
+        this.ctx.stroke()
 
     }
 
     //При клике на поле
     selectRect(e){
-        //console.log(e)
-        //Инициализация холста
-        const canvas = document.getElementById("canvas")
-        const ctx = canvas.getContext('2d')
-        this.canvas = document.getElementById("canvas")
-        this.ctx = canvas.getContext('2d')
 
-
-        ctx.beginPath()
-        ctx.fillStyle="#5E5E5E";
+        this.ctx.beginPath()
+        this.ctx.fillStyle="#5E5E5E";
         
         //Получение координат клика
         let xPos = e.clientX-e.target.offsetLeft
@@ -116,11 +116,10 @@ class Playarea extends React.Component {
         //Координаты левого верхнего угла ячейки
         xPos = this.getPosByIndex(xIndex)
         yPos = this.getPosByIndex(yIndex)
-        console.log(xPos, yPos)
         
         //Определение первого клика
         if (this.firstPress){
-            ctx.fillRect(xPos,yPos, this.step, this.step)
+            this.ctx.fillRect(xPos,yPos, this.step, this.step)
             this.firstPress = false
             this.genArea(xIndex,yIndex)
             
@@ -136,8 +135,8 @@ class Playarea extends React.Component {
         } else{
             //отмена предыдущего выделения
             if (this.areaOpen[this.lastblock[0]][this.lastblock[1]] < 2){
-                ctx.fillStyle="#9E9E9E";
-                ctx.fillRect(this.getPosByIndex(this.lastblock[0]),
+                this.ctx.fillStyle="#9E9E9E";
+                this.ctx.fillRect(this.getPosByIndex(this.lastblock[0]),
                     this.getPosByIndex(this.lastblock[1]),
                     this.step, this.step)
             }
@@ -147,22 +146,22 @@ class Playarea extends React.Component {
             
             //выделение ячейки
             if(this.areaOpen[xIndex][yIndex] < 2){
-                ctx.fillStyle="#7E7E7E";
-                ctx.fillRect(xPos,yPos, this.step, this.step)
+                this.ctx.fillStyle="#7E7E7E";
+                this.ctx.fillRect(xPos,yPos, this.step, this.step)
             }
             
         }
         
         //перерисовка прямых, костыль
-        ctx.lineWidth = this.lineWidth/2
+        this.ctx.lineWidth = this.lineWidth/2
         for(let i = this.lineWidth; i<=this.canvSize; i+=this.step ){
-            ctx.moveTo(0,i)
-            ctx.lineTo(this.canvSize,i)
-            ctx.moveTo(i,0)
-            ctx.lineTo(i,this.canvSize)
+            this.ctx.moveTo(0,i)
+            this.ctx.lineTo(this.canvSize,i)
+            this.ctx.moveTo(i,0)
+            this.ctx.lineTo(i,this.canvSize)
         }
         //Отображение изменений
-        ctx.stroke()
+        this.ctx.stroke()
     }
 
     //Генерация мин
@@ -180,7 +179,6 @@ class Playarea extends React.Component {
         //Генерация мин
         let nx,ny
         let i = 0
-        console.log(a)
         while (i< this.areaSize){
             nx = Math.floor(Math.random()*10)
             ny = Math.floor(Math.random()*10)
@@ -190,16 +188,16 @@ class Playarea extends React.Component {
                 i++
             }
         }
-        console.log('Кол-во мин: ', i)
+        
         //Запись в глобальную переменную
-        console.log(a)
+        
         this.area = a
 
     }
 
     //Клик на кнопку МИНА
     isMine(){
-        //console.log('Мина,едрить ее')
+        
         let xIndex = this.lastblock[0]
         let yIndex = this.lastblock[1]
         //Позиция курсора
@@ -211,15 +209,16 @@ class Playarea extends React.Component {
         //Помечаем как предпологаемую мину
         this.areaOpen[xIndex][yIndex] = 3
         this.openedMines.push([xIndex,yIndex])
-        console.log(this.openedMines)
         
         
+        //Все ли мины подсвечены
         if (this.openedMines.length == this.areaSize){
             let f = true
-            console.log(this.openedMines)
+            //Все ли из подсвеченных верны
             for (let i = 0; i< this.openedMines.length; i++){
                 if (this.area[this.openedMines[i][0]][this.openedMines[i][1]] == 0) f = false
             }
+            //Если подсвечены все, и помечены верно, то победа игрока
             if (f){
                 this.winGame()
             }
@@ -229,30 +228,30 @@ class Playarea extends React.Component {
 
     //Нажатие на кнопку ПУСТО
     isClear(){
-        //console.log('Вроде чисто')
-        
         //Получение ячейки
         let xIndex = this.lastblock[0]
         let yIndex = this.lastblock[1]
 
         //Если мина, то ГГ
         if (this.area[xIndex][yIndex] == 1){
-            console.log('This is the end.......')
-            this.ctx.fillStyle="darkred";
-            this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
-        //Если пустоая, то открываем ее
+            this.filedGame()
+        //Если пустоя, то открываем ее
         }else if (this.area[xIndex][yIndex] == 0 || this.areaOpen[xIndex][yIndex] == 3){
+            //Если ранее ячейка была подсвечена как мина
             if (this.areaOpen[xIndex][yIndex] == 3){
                 for (let i = 0; i< this.openedMines.length; i++){
+                    //удаляем информацию о пометке
                     if (this.openedMines[i][0] == xIndex && this.openedMines[i][1] == yIndex){
                         this.openedMines.splice(i,1)
                     }
                 }
             }
+            //Открываем эту ячейку
             this.openBlock(xIndex,yIndex)
+            //Меняем кол-во очков
             this.score --
         }
-
+        //Подсчитываем кол-во открытых пустых клеток
         let cnt = 0
         for (let i = 0; i<this.areaSize; i++){
             for ( let j = 0; j < this.areaSize; j++){
@@ -260,14 +259,11 @@ class Playarea extends React.Component {
                     cnt ++
             }
         }
-
+        //Если все чистые открыты, то победа игрока
         if (cnt == this.areaSize*this.areaSize-this.areaSize)
             this.winGame()
-
-
-
+        //Выводим кол-во очков на экран
         document.getElementById("scores").innerHTML = this.score
-        console.log(this.area)
     }
 
     //Проверка ячейки на наличие мин
@@ -279,6 +275,7 @@ class Playarea extends React.Component {
         else return 0
     }
 
+    //Кол-во мин вокруг клетки
     getMinesAround(x,y){
         let cnt = 0 // Кол-во мин
         
@@ -295,6 +292,7 @@ class Playarea extends React.Component {
         return(cnt)
     }
 
+    //ОТкрытие ячейки
     openBlock(xIndex,yIndex){
         //Проверка на границы поля
         if (xIndex<0 || yIndex < 0 || xIndex >= this.areaSize || yIndex >= this.areaSize)
@@ -333,9 +331,18 @@ class Playarea extends React.Component {
         
     }
 
+    //Конец игры, победа
     winGame(){
         this.ctx.fillStyle="green";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
+        //WIP
+    }
+
+    //Проигрыш
+    filedGame(){
+        this.ctx.fillStyle="darkred";
+        this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
+        //WIP
     }
     
     render(){

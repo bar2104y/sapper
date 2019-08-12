@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/sapper/static/css/main.8d9e481d.chunk.css",
+    "main.js": "/sapper/static/js/main.c501730d.chunk.js",
+    "main.js.map": "/sapper/static/js/main.c501730d.chunk.js.map",
+    "runtime~main.js": "/sapper/static/js/runtime~main.ea5239f6.js",
+    "runtime~main.js.map": "/sapper/static/js/runtime~main.ea5239f6.js.map",
+    "static/css/2.da1bec0f.chunk.css": "/sapper/static/css/2.da1bec0f.chunk.css",
+    "static/js/2.d7babc97.chunk.js": "/sapper/static/js/2.d7babc97.chunk.js",
+    "static/js/2.d7babc97.chunk.js.map": "/sapper/static/js/2.d7babc97.chunk.js.map",
+    "index.html": "/sapper/index.html",
+    "precache-manifest.1f58bf1eec28c68ebe0cfbb65c71fd36.js": "/sapper/precache-manifest.1f58bf1eec28c68ebe0cfbb65c71fd36.js",
+    "service-worker.js": "/sapper/service-worker.js",
+    "static/css/2.da1bec0f.chunk.css.map": "/sapper/static/css/2.da1bec0f.chunk.css.map",
+    "static/css/main.8d9e481d.chunk.css.map": "/sapper/static/css/main.8d9e481d.chunk.css.map"
+  }
+}

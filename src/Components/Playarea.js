@@ -340,6 +340,8 @@ class Playarea extends React.Component {
     winGame(){
         this.ctx.fillStyle="green";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
+        this.min = 0
+        this.sec = 0
         clearInterval(this.timer)
         //WIP
     }
@@ -349,6 +351,8 @@ class Playarea extends React.Component {
         this.ctx.fillStyle="darkred";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
         clearInterval(this.timer)
+        this.min = 0
+        this.sec = 0
         //WIP
     }
     

@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, Group, PanelHeader, } from '@vkontakte/vkui';
+import { Panel, Group, PanelHeader, ListItem, Avatar} from '@vkontakte/vkui';
 import Mainmenu from '../Components/mainmenu'
 
-/*<Group title={fetchedUser.first_name+' '+fetchedUser.last_name}>
-		</Group>
-		*/
-
 const Home = ({ id, go, fetchedUser }) => (
-	<Panel id={id} >
-		<PanelHeader>
-            Сапер
-        </PanelHeader>
-		
-		<Mainmenu go={go} />
-		
-        
-        
+	<Panel id={id}>
+		<PanelHeader>Сапер</PanelHeader>
+		{fetchedUser &&
+		<Group title="Добро пожаловать!">
+			<ListItem
+				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
+				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
+			>
+				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
+			</ListItem>
+			<Mainmenu go={go} />
+		</Group>}
+
 	</Panel>
 );
 

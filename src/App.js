@@ -22,11 +22,13 @@ class App extends React.Component {
 
   componentDidMount() {
     connect.send("VKWebAppInit", {}); 
-    
+
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
 				case 'VKWebAppGetUserInfoResult':
-					this.setState({ fetchedUser: e.detail.data });
+          console.log(e.detail.data)
+          this.setState({fetchedUser : e.detail.data}) ;
+          console.log(this.state.fetchedUser)
 					break;
 				default:
 					console.log(e.detail.type);
@@ -43,7 +45,7 @@ class App extends React.Component {
   render(){
     return (
     <View activePanel={this.state.activePanel}>
-				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} publish={this.publish} joinToGroup={this.joinToGroup} />
+				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
         <Playarea id="play" go={this.go} />
     </View>
     );

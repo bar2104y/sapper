@@ -1,0 +1,24 @@
+*{
+    box-sizing: border-box;
+}
+.mainMenuConatainer{
+    width: 50%;
+    margin:  0 auto;
+    align-content: center;
+    padding: 10px;
+}
+.mainMenuConatainer>.actionButton{
+    padding: auto;
+    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    background: #5181b8;
+    color: cornsilk;
+    text-align: center;
+    border-radius: 50%;
+}
+.mainMenuConatainer>.actionButton>p{
+    white-space: nowrap;
+    overflow: hidden;
+}

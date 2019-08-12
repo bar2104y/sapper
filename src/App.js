@@ -1,26 +1,39 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Home from './Pannels/Home'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import connect from '@vkontakte/vkui-connect';
+
+import { View } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
+import Playarea from './Components/Playarea';
+
+
+class App extends React.Component {
+
+  constructor(props) {
+		super(props);
+
+		this.state = {
+			activePanel: 'home',
+			fetchedUser: null,
+		};
+  }
+  
+  go = (e) => {
+    this.setState({ activePanel: e.currentTarget.dataset.to })
+    console.log( e.currentTarget.dataset.to )
+  };
+  
+  render(){
+    return (
+    <View activePanel={this.state.activePanel}>
+				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} publish={this.publish} joinToGroup={this.joinToGroup} />
+        <Playarea id="play" go={this.go} />
+    </View>
+    );
+    }
 }
 
 export default App;

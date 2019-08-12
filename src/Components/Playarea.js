@@ -68,7 +68,12 @@ class Playarea extends React.Component {
             if (this.sec <10 ) s+= '0'
             s+=this.sec
 
-            document.getElementById('time').innerHTML = s
+            try{
+                document.getElementById('time').innerHTML = s
+            }
+            catch(e){
+                clearInterval(this.timer)
+            }
     }
 
     //Получение левого верзнего угла ячейки
@@ -335,6 +340,7 @@ class Playarea extends React.Component {
     winGame(){
         this.ctx.fillStyle="green";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
+        clearInterval(this.timer)
         //WIP
     }
 
@@ -342,6 +348,7 @@ class Playarea extends React.Component {
     filedGame(){
         this.ctx.fillStyle="darkred";
         this.ctx.fillRect(0,0,this.canvSize,this.canvSize);
+        clearInterval(this.timer)
         //WIP
     }
     

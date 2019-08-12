@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Home from './Pannels/Home'
 
@@ -20,6 +19,21 @@ class App extends React.Component {
 			fetchedUser: null,
 		};
   }
+
+  componentDidMount() {
+    connect.send("VKWebAppInit", {}); 
+    
+		connect.subscribe((e) => {
+			switch (e.detail.type) {
+				case 'VKWebAppGetUserInfoResult':
+					this.setState({ fetchedUser: e.detail.data });
+					break;
+				default:
+					console.log(e.detail.type);
+			}
+		});
+		connect.send('VKWebAppGetUserInfo', {});
+	}
   
   go = (e) => {
     this.setState({ activePanel: e.currentTarget.dataset.to })

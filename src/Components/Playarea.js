@@ -134,7 +134,6 @@ class Playarea extends React.Component {
         */
             this.lastblock= [xIndex+1,yIndex+1]
         } else{
-            //Клик - выделение
             //отмена предыдущего выделения
             if (this.areaOpen[this.lastblock[0]][this.lastblock[1]] < 2){
                 ctx.fillStyle="#9E9E9E";
@@ -257,7 +256,7 @@ class Playarea extends React.Component {
         let cnt = 0
         for (let i = 0; i<this.areaSize; i++){
             for ( let j = 0; j < this.areaSize; j++){
-                if (this.areaOpen == 2 )
+                if (this.areaOpen[i][j] == 2 )
                     cnt ++
             }
         }

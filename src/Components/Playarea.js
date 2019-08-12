@@ -18,6 +18,9 @@ class Playarea extends React.Component {
         this.score = this.areaSize*this.areaSize
         this.openedMines = []
 
+        this.sec = 0
+        this.min = 0
+
         this.areaOpen = []
         for (let i = 0; i<this.areaSize; i++){
             this.areaOpen[i] = []
@@ -32,15 +35,31 @@ class Playarea extends React.Component {
         this.isMine = this.isMine.bind(this)
         this.isClear = this.isClear.bind(this)
         this.getMinesInBlock = this.getMinesInBlock.bind(this)
-        
+        this.timer = this.timer.bind(this)        
     }
     componentDidMount(){
         this.canvas = this.refs.canvas
         this.ctx = this.refs.canvas.getContext('2d')
         this.canvas.addEventListener('click', this.selectRect)
         this.createCanvas()
+
+        setInterval( this.timer, 1000)
     }
 
+    timer(){
+        this.sec++
+            if (this.sec == 60){
+                this.min++
+                this.sec = 0
+            }
+            let s = ''
+            if (this.min < 10) s += '0'
+            s += this.min + ':'
+            if (this.sec <10 ) s+= '0'
+            s+=this.sec
+
+            document.getElementById('time').innerHTML = s
+    }
 
     //Получение левого верзнего угла ячейки
     getPosByIndex(x){
@@ -329,7 +348,7 @@ class Playarea extends React.Component {
                 <div>
                     <div className="topMenu" >
                         <div id="scores">{this.score}</div>
-                        <div id="time">12:00</div>
+                        <div id="time">00:00</div>
                     </div>
                     <div className="gameContainer">
                         <canvas id="canvas" ref="canvas" width={this.canvSize} height={this.canvSize} />

@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/sapper/static/css/main.8d9e481d.chunk.css",
-    "main.js": "/sapper/static/js/main.c501730d.chunk.js",
-    "main.js.map": "/sapper/static/js/main.c501730d.chunk.js.map",
+    "main.js": "/sapper/static/js/main.3edde809.chunk.js",
+    "main.js.map": "/sapper/static/js/main.3edde809.chunk.js.map",
     "runtime~main.js": "/sapper/static/js/runtime~main.ea5239f6.js",
     "runtime~main.js.map": "/sapper/static/js/runtime~main.ea5239f6.js.map",
     "static/css/2.da1bec0f.chunk.css": "/sapper/static/css/2.da1bec0f.chunk.css",
-    "static/js/2.d7babc97.chunk.js": "/sapper/static/js/2.d7babc97.chunk.js",
-    "static/js/2.d7babc97.chunk.js.map": "/sapper/static/js/2.d7babc97.chunk.js.map",
+    "static/js/2.8b55327a.chunk.js": "/sapper/static/js/2.8b55327a.chunk.js",
+    "static/js/2.8b55327a.chunk.js.map": "/sapper/static/js/2.8b55327a.chunk.js.map",
     "index.html": "/sapper/index.html",
-    "precache-manifest.1f58bf1eec28c68ebe0cfbb65c71fd36.js": "/sapper/precache-manifest.1f58bf1eec28c68ebe0cfbb65c71fd36.js",
+    "precache-manifest.3db878a5bb7abb9bddeb5e92a40eb2b3.js": "/sapper/precache-manifest.3db878a5bb7abb9bddeb5e92a40eb2b3.js",
     "service-worker.js": "/sapper/service-worker.js",
     "static/css/2.da1bec0f.chunk.css.map": "/sapper/static/css/2.da1bec0f.chunk.css.map",
     "static/css/main.8d9e481d.chunk.css.map": "/sapper/static/css/main.8d9e481d.chunk.css.map"

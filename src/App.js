@@ -6,7 +6,9 @@ import connect from '@vkontakte/vkui-connect';
 
 import { View } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+
 import Playarea from './Components/Playarea';
+import Leaders from './Components/Leaders';
 
 
 class App extends React.Component {
@@ -26,9 +28,7 @@ class App extends React.Component {
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
 				case 'VKWebAppGetUserInfoResult':
-          console.log(e.detail.data)
           this.setState({fetchedUser : e.detail.data}) ;
-          console.log(this.state.fetchedUser)
 					break;
 				default:
 					console.log(e.detail.type);
@@ -37,16 +37,22 @@ class App extends React.Component {
 		connect.send('VKWebAppGetUserInfo', {});
 	}
   
+  //Переход на новую панель
   go = (e) => {
     this.setState({ activePanel: e.currentTarget.dataset.to })
-    console.log( e.currentTarget.dataset.to )
   };
+
+  //Диалоговое окно поделиться
+  share = (e) =>{
+    connect.send("VKWebAppShare", {"link": "https://vk.com/app7094427"})
+  }
   
   render(){
     return (
     <View activePanel={this.state.activePanel}>
-				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
+				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} share={this.share} />
         <Playarea id="play" go={this.go} />
+        <Leaders id="leaders" go={this.go} />
     </View>
     );
     }

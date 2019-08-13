@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4672a51972af715b1a360e07d7c95025",
+    "revision": "edc307cf1fb5db745b6188f09515333a",
     "url": "/sapper/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sapper/static/css/2.da1bec0f.chunk.css"
   },
   {
-    "revision": "66f9331b9f842f77cffc",
+    "revision": "7d7e465d52e20501d185",
     "url": "/sapper/static/css/main.8d9e481d.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sapper/static/js/2.f634a28f.chunk.js"
   },
   {
-    "revision": "66f9331b9f842f77cffc",
-    "url": "/sapper/static/js/main.abc8fee4.chunk.js"
+    "revision": "7d7e465d52e20501d185",
+    "url": "/sapper/static/js/main.53711461.chunk.js"
   },
   {
     "revision": "eebf58037ff792fb60f0",
